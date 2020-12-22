@@ -6,43 +6,65 @@ import operations.DivideOperation;
 import operations.MultiplyOperation;
 import operations.SubOperations;
 public class InteractiveCalculator {
+	static Scanner s = new Scanner(System.in);
 	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
+
 		System.out.println("Enter 1st number:");
-		int numA = s.nextInt();
+		final float numA = s.nextInt();
 		s.nextLine();
 		System.out.println("Enter 2nd number:");
-		int numB = s.nextInt();
+		final float numB = s.nextInt();
 		s.nextLine();
-		System.out.println("Enter operator:");
-		String op = s.nextLine();
+		System.out.println("Enter operator: + or - or * or /");
+		String operator = s.next();
 		s.nextLine();
-		int result = 0;
+		double result = 0;
+		result = (double)calculator(numA, numB, operator);
+	    System.out.println("Result" + result);
 
-		if(op.equals("add")) {
-			AddOperations add = new AddOperations();
-			add.setA(numA);
-			add.setB(numB);
-			result = add.getResult();
-		}else if(op.equals("sub")) {
-			SubOperations sub = new SubOperations();
-			sub.setA(numA);
-			sub.setB(numB);
-			result = sub.getResult();			
-		}else if(op.equals("mul")) {
-			MultiplyOperation mul = new MultiplyOperation();
-			mul.setA(numA);
-			mul.setB(numB);
-			result = mul.getResult();
-		}else if(op.equals("div")) {
-			DivideOperation div = new DivideOperation();
-			div.setA(numA);
-			div.setB(numB);
-			result = div.getResult();
-		}else{
-			System.out.println("Did not understand");
+	}
+
+	private static double calculator(float numA, float numB, String operator) {
+		double result = 0;
+		boolean process = true;
+		while(process) {
+			switch(operator) {
+			case "+":
+				AddOperations add = new AddOperations();
+				add.setA(numA);
+				add.setB(numB);
+				result = add.getResult();
+				process = false;
+				break;
+			case "-":
+				SubOperations sub = new SubOperations();
+				sub.setA(numA);
+				sub.setB(numB);
+				result = sub.getResult();
+				process = false;
+				break;
+			case "*":
+				MultiplyOperation mul = new MultiplyOperation();
+				mul.setA(numA);
+				mul.setB(numB);
+				result = mul.getResult();
+				process = false;
+				break;
+			case "/":
+				DivideOperation div = new DivideOperation();
+				div.setA(numA);
+				div.setB(numB);
+				result = div.getResult();
+				process = false;
+				break;
+			default:
+				System.out.println("Please enter correct operator!");
+				operator = s.nextLine();
+				process = true;
+				break;
+			}
 		}
-		System.out.println("Result" + result);
+		return result;
 	}
 
 }
